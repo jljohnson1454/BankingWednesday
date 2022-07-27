@@ -8,9 +8,8 @@ public class Account
         return _balance;
     }
 
-    public void Deposit(decimal amountToDeposit)
+    public virtual void Deposit(decimal amountToDeposit)
     {
-        decimal bonus = this.Status == AccountStatus.Gold ? amountToDeposit
 
        _balance += amountToDeposit;
     }
