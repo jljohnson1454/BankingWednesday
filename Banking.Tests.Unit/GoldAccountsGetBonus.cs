@@ -1,15 +1,13 @@
-﻿
-namespace Banking.Tests.Unit;
+﻿namespace Banking.Tests.Unit;
 
-public class GoldAccountsGetBonus
+public class GoldAccountsGetBonuses
 {
+
+
     [Fact]
-
-    public void GoldAccountsGetBonusOnDeposit()
+    public void GoldAccountsGetDepositBonus()
     {
-
-        //Given
-        var account = new Account();
+        var account = new GoldAccounts();
         var openingBalance = account.GetBalance();
         var amountToDeposit = 100M;
 
