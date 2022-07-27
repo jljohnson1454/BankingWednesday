@@ -10,6 +10,8 @@ public class Account
 
     public void Deposit(decimal amountToDeposit)
     {
+        decimal bonus = this.Status == AccountStatus.Gold ? amountToDeposit
+
        _balance += amountToDeposit;
     }
 
