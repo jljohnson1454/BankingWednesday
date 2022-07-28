@@ -1,31 +1,38 @@
 ﻿
 namespace Banking.Tests.Unit;
 
+
 public class MakingWithdrawals
 {
+
+    private Account _account;
+
+    public MakingWithdrawals()
+    {
+        _account = new Account(new BonusCalculatorDummy());
+    }
+
     [Fact]
     public void WithdrawalsDecreaseTheBalance()
     {
-        var account = new Account();
-        var openingBalance = account.GetBalance();
+        var openingBalance = _account.GetBalance();
         var amountToWithdraw = 100M;
 
-        account.Withdraw(amountToWithdraw);
+        _account.Withdraw(amountToWithdraw);
 
         Assert.Equal(openingBalance - amountToWithdraw,
-           account.GetBalance());
+           _account.GetBalance());
     }
 
     [Fact]
     public void OverdraftDoesNotReduceBalance()
     {
-        var account = new Account();
-        var openingBalance = account.GetBalance();
+        var openingBalance = _account.GetBalance();
         var amountToWithdraw = openingBalance + 1;
 
         try
         {
-            account.Withdraw(amountToWithdraw);
+            _account.Withdraw(amountToWithdraw);
         }
         catch (OverdraftException)
         {
@@ -34,7 +41,7 @@ public class MakingWithdrawals
         }
         finally
         {
-            Assert.Equal(openingBalance, account.GetBalance());
+            Assert.Equal(openingBalance, _account.GetBalance());
         }
     }
 
@@ -42,10 +49,9 @@ public class MakingWithdrawals
     public void OverdraftThrows()
     {
 
-        var account = new Account();
 
         Assert.Throws<OverdraftException>(
-            () =>  account.Withdraw(account.GetBalance() + 1)
+            () =>  _account.Withdraw(_account.GetBalance() + 1)
         );
 
 
@@ -57,11 +63,10 @@ public class MakingWithdrawals
     public void ShouldBeAllowedToTakeTheEntireBalance()
     {
 
-        var account = new Account();
 
-        account.Withdraw(account.GetBalance());
+        _account.Withdraw(_account.GetBalance());
 
-        Assert.Equal(0, account.GetBalance());
+        Assert.Equal(0, _account.GetBalance());
     }
 
 }
